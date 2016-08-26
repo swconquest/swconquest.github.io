@@ -33,7 +33,15 @@
  <link rel=canonical href='https://tldmod.github.io/'>
  
  <style>
-  @import url(//fonts.googleapis.com/css?family=Merriweather:400,400italic);
+  @font-face
+  {
+    font-family: 'swfontregular';
+    src: url('fnt/swfont-webfont.woff2') format('woff2'),
+         url('fnt/swfont-webfont.woff')  format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
   html
   {
     background:#221A18;
@@ -45,7 +53,7 @@
        -moz-user-select:none;
          -o-user-select:none;
     cursor:default !important;
-    font-family: 'Merriweather', garamond, georgia, times, serif;
+    font-family: 'swfontregular', sans-serif;
     background-image: url(img/swyTLDprofile.bg.jpg);
     height:100%;
     width: 100%;
