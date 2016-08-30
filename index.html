@@ -44,7 +44,7 @@
   
   html
   {
-    background:#221A18;
+    background:#2a2a2b;
     color:#985;
     text-shadow:2px 1px black;
     font-family:cursive;
@@ -206,7 +206,7 @@
   abbr
   {
     border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
-    display: inline-block;
+    display: inline;
     line-height: 15px;
   }
   p
@@ -263,7 +263,7 @@
   Nightly patches are automatically generated development builds baked by a helpful bot, which you can use to stay on the bleeding edge.<br/><br/>
   They come with the latest changes, enhancements and bug fixes, we are using a <em>rolling release</em> model so that you can stay on the loop.
  </p>
- <section id=languages>
+ <!-- section id=languages>
   <h3>Included languages:</h3>
   <ul id=lang>
      <li lang=en>English</li>
@@ -278,7 +278,7 @@
       <a href=https://transifex.com/projects/p/swconquest/ target=tab>Want to contribute?</a>
      </li>
   </ul>
- </section>
+ </section -->
 
  <section id=instructions role=form>
   <h1>INSTRUCTIONS</h1>
@@ -298,21 +298,21 @@
    <p style="text-align: center; border-bottom: 1px solid; height: 14px; margin-bottom: 36px;"><legend style="display: inline-block; background: rgba(34, 26, 24, 0.85) none repeat scroll 0% 0%; padding-left: 20px; padding-right: 20px; border-radius: 7px; border: 1px solid;">Or just download it manually...</legend></p>
   </not-mac></if-wb>
   <ol>
-    <li>Latest standalone version of the mod — <em>TLD_3.3.7z</em>
+    <li>Latest standalone version of the mod — <em>SWC094.7z</em>
       <span>
         Download from
-        <a href=https://bitbucket.org/Swyter/tld-downloads/downloads/TLD_3.3.7z>Bitbucket</a> or
-        <a href=http://www.moddb.com/mods/the-last-days/downloads/the-last-days-of-the-third-age-33#subheader>ModDB</a>.
+        <a href=https://bitbucket.org/Swyter/swconquest-downloads/downloads/SWC094.7z>Bitbucket</a><!-- or
+        <a href=http://www.moddb.com/mods/the-last-days/downloads/the-last-days-of-the-third-age-33#subheader>ModDB</a -->.
       </span>
     </li>
 
     <if-wb>
     <li>
-     Warband compatibility patch. — <em>TLD_3.3_wbcompat.7z</em>
+     Warband compatibility patch. — <em>SWC094_wbcompat.7z</em>
       <span>
         Download from
-        <a href=https://bitbucket.org/Swyter/tld-downloads/downloads/TLD_3.3_wbcompat.7z>Bitbucket</a> or
-        <a href=http://www.moddb.com/mods/the-last-days/downloads/the-last-days-of-the-third-age-33-warband-patch#subheader>ModDB</a>.
+        <a href=https://bitbucket.org/Swyter/swconquest-downloads/downloads/SWC_094_wbcompat.7z>Bitbucket</a><!-- or
+        <a href=http://www.moddb.com/mods/the-last-days/downloads/the-last-days-of-the-third-age-33-warband-patch#subheader>ModDB</a -->.
       </span>
     </li>
     </if-wb>
@@ -323,12 +323,12 @@
       <span>
         Download from
         <if-wb>
-          <a href=https://bitbucket.org/Swyter/tld-downloads/downloads/TLD_3.3_wbcompat_nightly_patch_2015.04.23-14.13_r2043.7z id=nightly_link_warband>Bitbucket</a>
+          <a href=https://bitbucket.org/Swyter/swconquest-downloads/downloads/SWC_094_wbcompat_nightly_patch_2015.04.23-14.13_r2043.7z id=nightly_link_warband>Bitbucket</a>
         </if-wb>
         <if-mb>
-          <a href=https://bitbucket.org/Swyter/tld-downloads/downloads/TLD_3.3_nightly_patch_2015.04.23-14.13_r2043.7z id=nightly_link_mab1011>Bitbucket</a>
+          <a href=https://bitbucket.org/Swyter/swconquest-downloads/downloads/SWC_094_nightly_patch_2015.04.23-14.13_r2043.7z id=nightly_link_mab1011>Bitbucket</a>
         </if-mb>
-        <a href=https://bitbucket.org/Swyter/tld-downloads/downloads/ target=tab><em>(see more)</em></a>.
+        <a href=https://bitbucket.org/Swyter/swconquest-downloads/downloads/ target=tab><em>(see more)</em></a>.
       </span>
     </li>
   </ol>
@@ -435,7 +435,7 @@
     document.head.appendChild(jsonp);
   }
   /* here's the real meal V */
-  shitty_jsonp("http://bitbucket.org/Swyter/tld-downloads/downloads", function(json)
+  shitty_jsonp("http://bitbucket.org/Swyter/swconquest-downloads/downloads", function(json)
   {
     console.log("Starting to scrape the TLD downloads page & table!\n");
     window.bb_downloads = (new DOMParser).parseFromString(json.contents, "text/html");
@@ -455,7 +455,7 @@
         if (cur_date && cur_href)
         {
           /* mab1011 link? */
-          if(cur_href.indexOf("TLD_3.3_nightly_patch_") != -1)
+          if(cur_href.indexOf("SWC_094_nightly_patch_") != -1)
           {
             //console.log("This is a mab1011 link!");
             //console.log((+cur_date) +" "+ (+mb_date));
@@ -467,7 +467,7 @@
             }
           }
           /* warband link? */
-          else if(cur_href.indexOf("TLD_3.3_wbcompat_nightly_patch_") != -1)
+          else if(cur_href.indexOf("SWC_094_wbcompat_nightly_patch_") != -1)
           {
             //console.log("This is a warband link!");
             if(+cur_date > +wb_date)
