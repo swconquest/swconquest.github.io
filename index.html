@@ -301,7 +301,7 @@
     <li>Latest standalone version of the mod — <em>SWC094.7z</em>
       <span>
         Download from
-        <a href=https://bitbucket.org/Swyter/swconquest-downloads/downloads/SWC094.7z>Bitbucket</a><!-- or
+        <a href=https://bitbucket.org/Swyter/swconquest-downloads/downloads/swconquest-094-final.7z>Bitbucket</a><!-- or
         <a href=http://www.moddb.com/mods/the-last-days/downloads/the-last-days-of-the-third-age-33#subheader>ModDB</a -->.
       </span>
     </li>
@@ -311,15 +311,15 @@
      Warband compatibility patch. — <em>SWC094_wbcompat.7z</em>
       <span>
         Download from
-        <a href=https://bitbucket.org/Swyter/swconquest-downloads/downloads/SWC_094_wbcompat.7z>Bitbucket</a><!-- or
+        <a href=https://bitbucket.org/Swyter/swconquest-downloads/downloads/swconquest-094-final-wbcompat.7z>Bitbucket</a><!-- or
         <a href=http://www.moddb.com/mods/the-last-days/downloads/the-last-days-of-the-third-age-33-warband-patch#subheader>ModDB</a -->.
       </span>
     </li>
     </if-wb>
 
-    <li>
+    <!--li>
       Latest nightly patch for <if-wb>Warband</if-wb><if-mb>M&amp;B 1.011</if-mb> (from <if-wb><em id=nightly_date_warband>2015/04/23 *checking*</em></if-wb><!--
-                                                                                     --><if-mb><em id=nightly_date_mab1011>2015/04/23 *checking*</em></if-mb>)
+                                                                                     -- ><if-mb><em id=nightly_date_mab1011>2015/04/23 *checking*</em></if-mb>)
       <span>
         Download from
         <if-wb>
@@ -330,7 +330,7 @@
         </if-mb>
         <a href=https://bitbucket.org/Swyter/swconquest-downloads/downloads/ target=tab><em>(see more)</em></a>.
       </span>
-    </li>
+    </li -->
   </ol>
 
   <p>
@@ -434,15 +434,15 @@
     jsonp.setAttribute("src","//whateverorigin.herokuapp.com/get?url="+url+"&callback="+random_id);
     document.head.appendChild(jsonp);
   }
-  /* here's the real meal V */
+  /* here's the real meal V * /
   shitty_jsonp("http://bitbucket.org/Swyter/swconquest-downloads/downloads", function(json)
   {
     console.log("Starting to scrape the TLD downloads page & table!\n");
     window.bb_downloads = (new DOMParser).parseFromString(json.contents, "text/html");
     window.bb_uploads_table = bb_downloads.getElementById("uploaded-files");
-    /* grab the array of elements in the table */
+    /* grab the array of elements in the table * /
     window.bb_uploads_table = bb_uploads_table.children[1].children;
-    /* default paleolithic date to compare against */
+    /* default paleolithic date to compare against * /
     window.mb_date = new Date("1992-01-01");
     window.wb_date = new Date("1992-01-01");
     for(child in bb_uploads_table)
@@ -454,7 +454,7 @@
         var cur_href = bb_uploads_table[child].getElementsByClassName("execute")[0].attributes["href"].textContent;
         if (cur_date && cur_href)
         {
-          /* mab1011 link? */
+          /* mab1011 link? * /
           if(cur_href.indexOf("SWC_094_nightly_patch_") != -1)
           {
             //console.log("This is a mab1011 link!");
@@ -466,7 +466,7 @@
               window.mb_href = cur_href;
             }
           }
-          /* warband link? */
+          /* warband link? * /
           else if(cur_href.indexOf("SWC_094_wbcompat_nightly_patch_") != -1)
           {
             //console.log("This is a warband link!");
@@ -486,14 +486,14 @@
       console.log("latest Warband nightly URL: "+ wb_href +", uploaded on "+ wb_date);
       console.log("latest MB 1011 nightly URL: "+ mb_href +", uploaded on "+ mb_date);
       /* probably a fine example of why js sucks,
-         try to format dates in a compact way w/o ending churning out spaguetti code */
+         try to format dates in a compact way w/o ending churning out spaguetti code * /
       document.getElementById("nightly_date_mab1011").textContent =             mb_date.getFullYear()            + "/" +
                                                                    ( "0" + (1 + mb_date.getMonth()) ).substr(-2) + "/" +
                                                                    ( "0" +      mb_date.getDate()   ).substr(-2);
       document.getElementById("nightly_date_warband").textContent =             wb_date.getFullYear()            + "/" +
                                                                    ( "0" + (1 + wb_date.getMonth()) ).substr(-2) + "/" +
                                                                    ( "0" +      wb_date.getDate()   ).substr(-2);
-      /* replace the static links with the latest scrapped ones */
+      /* replace the static links with the latest scrapped ones * /
       document.getElementById("nightly_link_mab1011").href = "https://bitbucket.org" + mb_href.trim();
       document.getElementById("nightly_link_warband").href = "https://bitbucket.org" + wb_href.trim();
     }
@@ -502,6 +502,9 @@
       console.error("the bb downloads page couldn't be scrapped! :(");
     }
   });
+  
+  */
+  
   /*
    * DOMParser HTML extension
    * 2012-09-04
