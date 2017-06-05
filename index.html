@@ -438,53 +438,43 @@
     document.head.appendChild(jsonp);
   }
   /* here's the real meal V */
-  shitty_jsonp("http://bitbucket.org/Swyter/swconquest-downloads/downloads", function(json)
+  xhr = new XMLHttpRequest();
+  xhr.responseType = 'json';
+  xhr.open('GET', 'https://api.bitbucket.org/2.0/repositories/Swyter/swconquest-downloads/downloads');
+  xhr.addEventListener('loadend', function(e)
   {
     console.log("Starting to scrape the TLD downloads page & table!\n");
-    window.bb_downloads = (new DOMParser).parseFromString(json.contents, "text/html");
-    window.bb_uploads_table = bb_downloads.getElementById("uploaded-files");
-    /* grab the array of elements in the table */
-    window.bb_uploads_table = bb_uploads_table.children[1].children;
+   
+    if ((e.target.statusText != 'OK' && e.target.status != 200) || !e.target.response || !e.target.response.values)
+    {
+       console.error("[!] There was a network/API problem\n", e); return;
+    }
+    
     /* default paleolithic date to compare against */
     window.mb_date = new Date("1992-01-01");
     window.wb_date = new Date("1992-01-01");
-    for(child in bb_uploads_table)
+  
+    for (var entry of e.target.response.values)
     {
-      if(typeof bb_uploads_table[child] === 'object')
+      var cur_date = new Date(entry.created_on);
+      var cur_href = entry.links.self.href;
+      /* mab1011 link? */
+      if (cur_href.indexOf("swconquest-094-final_nightly_") != -1 && +cur_date > +window.mb_date)
       {
-        //console.log(bb_uploads_table[child]);
-        var cur_date = new Date(bb_uploads_table[child].getElementsByTagName('time')[0].attributes["datetime"].textContent);
-        var cur_href = bb_uploads_table[child].getElementsByClassName("execute")[0].attributes["href"].textContent;
-        if (cur_date && cur_href)
-        {
-          /* mab1011 link? */
-          if(cur_href.indexOf("swconquest-094-final_nightly_") != -1)
-          {
-            //console.log("This is a mab1011 link!");
-            //console.log((+cur_date) +" "+ (+mb_date));
-            if(+cur_date > +mb_date)
-            {
-              //console.log("mb newest to date!");
-              window.mb_date = cur_date;
-              window.mb_href = cur_href;
-            }
-          }
-          /* warband link? */
-          else if(cur_href.indexOf("swconquest-094-final-wbcompat_nightly_") != -1)
-          {
-            //console.log("This is a warband link!");
-            if(+cur_date > +wb_date)
-            {
-              //console.log("wb newest to date!");
-              window.wb_date = cur_date;
-              window.wb_href = cur_href;
-            }
-          }
-        }
+        window.mb_date = cur_date;
+        window.mb_href = cur_href;
       }
+      /* warband link? */
+      else if (cur_href.indexOf("swconquest-094-final-wbcompat_nightly_") != -1 && +cur_date > +window.wb_date)
+      {
+        window.wb_date = cur_date;
+        window.wb_href = cur_href;
+      }
+       
     }
+    
     console.log("Finished!\n--");
-    if(wb_href && mb_href)
+    if (window.wb_href && window.mb_href)
     {
       console.log("latest Warband nightly URL: "+ wb_href +", uploaded on "+ wb_date);
       console.log("latest MB 1011 nightly URL: "+ mb_href +", uploaded on "+ mb_date);
@@ -497,60 +487,16 @@
                                                                    ( "0" + (1 + wb_date.getMonth()) ).substr(-2) + "/" +
                                                                    ( "0" +      wb_date.getDate()   ).substr(-2);
       /* replace the static links with the latest scrapped ones */
-      document.getElementById("nightly_link_mab1011").href = "https://bitbucket.org" + mb_href.trim();
-      document.getElementById("nightly_link_warband").href = "https://bitbucket.org" + wb_href.trim();
+      document.getElementById("nightly_link_mab1011").href = mb_href.trim();
+      document.getElementById("nightly_link_warband").href = wb_href.trim();
     }
     else
     {
-      console.error("the bb downloads page couldn't be scrapped! :(");
+      console.error("[!] the bb downloads page couldn't be scrapped! :(");
     }
   });
   
-  
-  /*
-   * DOMParser HTML extension
-   * 2012-09-04
-   *
-   * By Eli Grey, http://eligrey.com
-   * Public domain.
-   * NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
-   */
-  /*! @source https://gist.github.com/1129031 */
-  /*global document, DOMParser*/
-  (function(DOMParser) {
-    "use strict";
-    var DOMParser_proto = DOMParser.prototype;
-    var real_parseFromString = DOMParser_proto.parseFromString;
-    // Firefox/Opera/IE throw errors on unsupported types
-    try
-    {
-      // WebKit returns null on unsupported types
-      if ((new DOMParser).parseFromString("", "text/html"))
-      {
-        // text/html parsing is natively supported
-        return;
-      }
-    } catch (ex) {}
-    DOMParser_proto.parseFromString = function(markup, type) {
-      if (/^\s*text\/html\s*(?:;|$)/i.test(type))
-      {
-        var doc = document.implementation.createHTMLDocument("");
-        if (markup.toLowerCase().indexOf('<!doctype') > -1)
-        {
-          doc.documentElement.innerHTML = markup;
-        }
-        else
-        {
-          doc.body.innerHTML = markup;
-        }
-        return doc;
-      }
-      else
-      {
-        return real_parseFromString.apply(this, arguments);
-      }
-    };
-  }(DOMParser));
+  xhr.send();
  </script>
 </body>
 </html>
