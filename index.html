@@ -45,21 +45,21 @@
   
   html
   {
-    background:#282222;
-    color:#985;
-    text-shadow:2px 1px black;
+    background: #282222;
+    color: #985;
+    text-shadow: 2px 1px black;
     font-family:cursive;
-            user-select:none;
-    -webkit-user-select:none;
-       -moz-user-select:none;
-         -o-user-select:none;
+            user-select: none;
+    -webkit-user-select: ;
+       -moz-user-select: none;
+         -o-user-select: none;
     cursor:default !important;
     font-family: 'swfontregular', sans-serif;
     background-image: url(img/swyTLDprofile.bg.jpg);
-    height:100%;
-    width: 100%;
     height: 100%;
-    background-repeat:no-repeat;
+    width:  100%;
+    height: 100%;
+    background-repeat: no-repeat;
   }
   /* for screens wider than the background image */
   @media(min-width: 1349px)
@@ -70,20 +70,71 @@
       background-size: cover;
     }
   }
+  /* swy: hide the language completion percentages when there isn't enough space */
+  @media(max-width: 620px)
+  {
+    #languages li span { display: none !important; column-gap: 0; }
+  }
+  /* swy: also; reduce the amount of language rows as we run out of room */
+  @media(max-width: 466px)
+  {
+    ul
+    {
+      -webkit-column-count: 2 !important;
+              column-count: 2 !important;
+              column-count: 2 !important; padding: 0 14px;
+    }
+    
+    #languages li span { display: inline !important; color: darkgoldenrod; }
+  }
+  @media(max-width: 400px)
+  {
+    p[style]
+    {
+        height: 26px !important; margin-top: 26px !important;
+        margin-bottom: 45px !important;
+        margin-top: -23px;
+    }
+    legend { margin: 0 38px !important; }
+  }
+  @media(max-width: 320px)
+  {
+    ul
+    {
+      -webkit-column-count: 1 !important;
+              column-count: 1 !important;
+              column-count: 1 !important; padding: 0 32px;
+    }
+  }
+    
   a[href]
   {
     color:inherit;
   }
+
   body
   {
-    max-width:620px;
-    margin:0 auto;
-    padding:25px;
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 25px;
   }
+
+  /* swy: stole this from here: https://stackoverflow.com/a/6509239/674685 */
+  ul
+  {
+       -moz-column-count: 3;
+       -moz-column-gap:   20px;
+    -webkit-column-count: 3;
+    -webkit-column-gap:   20px;
+            column-count: 3;
+            column-gap:   20px;
+  }
+
   ul li
   {
     list-style-type: circle;
   }
+
   #lang li[lang]:before
   {
     content: "";
@@ -92,8 +143,13 @@
     width: 16px;
     height: 11px;
     margin-right: 5px;
+    image-rendering: -moz-crisp-edges; /* swy: old firefox; go figure */
+    image-rendering: crisp-edges;      /* swy: firefox but not chrome */
+    image-rendering: pixelated;        /* swy: chrome but not firefox */
   }
+
   /* shitty CSS3 implementations ftw! */
+
   #lang li[lang=en]:before
   {
     background-image: url(img/en.png);
@@ -126,26 +182,71 @@
   {
     background-image: url(img/it.png);
   }
+  #lang li[lang=tr]:before
+  {
+    background-image: url(img/tr.png);
+  }
+  #lang li[lang='zh-Hans']:before,
+  #lang li[lang='zh-Hant']:before
+  {
+    background-image: url(img/zh.png);
+  }
+  #lang li[lang=pt-BR]:before
+  {
+    background-image: url(img/br.png);
+  }
+  #lang li[lang=sk]:before
+  {
+    background-image: url(img/sk.png);
+  }
+  #lang li[lang=ko]:before
+  {
+    background-image: url(img/ko.png);
+  }
+  
   #ul
   {
     list-style: none;
     margin: 0;
   }
+
   #mab1011, #warband
   {
     display: inline-block;
     background-repeat: no-repeat;
+
     padding-left: 36px;
     height: 32px;
   }
+
   #mab1011
   {
     background-image: url(img/icon-mab1011.png);
   }
+
   #warband
   {
     background-image: url(img/icon-warband.png);
   }
+
+@media only screen and ( -webkit-min-device-pixel-ratio: 1.1 ),   /* swy: HiDPI versions of the logo that kick in when we surpass 100%/96PPI: */
+       only screen and (    min--moz-device-pixel-ratio: 1.1 ),   /*      https://stackoverflow.com/a/24639219/674685                         */
+       only screen and (      -o-min-device-pixel-ratio: 2.6/2 ), /* returns 1.3, see Dev.Opera */
+       only screen and (         min-device-pixel-ratio: 1.1 ),
+       only screen and ( min-resolution: 97dpi ),
+       only screen and ( min-resolution: 1.3dppx )
+{
+  #mab1011
+  {
+    background-image: url(img/icon-mab1011-hires.png);
+  }
+
+  #warband
+  {
+    background-image: url(img/icon-warband-hires.png);
+  }
+}
+
   input
   {
     left: -15px;
@@ -153,12 +254,14 @@
     top: 22px;
     display: block;
   }
+
   label span
   {
     position: relative;
     top: -10px;
     padding: 10px;
   }
+
   ol span, .download
   {
     display: block;
@@ -168,7 +271,11 @@
     padding-bottom: 20px;
     background-image: url(img/download.gif);
     background-repeat: no-repeat;
+    image-rendering: -moz-crisp-edges; /* swy: old firefox; go figure */
+    image-rendering: crisp-edges;      /* swy: firefox but not chrome */
+    image-rendering: pixelated;        /* swy: chrome but not firefox */
   }
+
   .if-wb       if-mb, /* if we want warband don't show mb1011 */
   .if-mb       if-wb, /* if we want mb1011 don't show warband */
                  mac, /* don't show me mac text by default :) */
@@ -176,15 +283,18 @@
   {
     display: none;
   }
+
   /* show only the mac notice if warband is selected */
   .if-wb.mac mac
   {
     display: inline;
   }
+
   #links
   {
     text-align:center;
   }
+
   noscript
   {
     position: fixed;
@@ -199,17 +309,20 @@
     border-radius: 5px;
     box-shadow: 2px 2px;
   }
+
   /* html5 tags compatibility for older browsers */
   section, article, aside, footer, header, nav, hgroup
   {
     display:block;
   }
+
   abbr
   {
     border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
-    display: inline;
+    display: inline-block;
     line-height: 15px;
   }
+
   p
   {
     line-height: 1.5em;
@@ -238,6 +351,7 @@
     margin-left: -1px;
   }
   
+
   a[href*=steam][href$=profileBlock]:before
   {
     position: relative;
@@ -247,9 +361,23 @@
     width: 16px;
     height: 16px;
     margin-right: 4px;
-    background-image: url(https://steamcommunity.com/favicon.ico);
+
+    background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="m151.96 418c13.572 0 26.893-6.567 34.986-18.708 12.867-19.301 7.651-45.377-11.649-58.244l-33.037-22.022c5.654-1.54 11.597-2.38 17.739-2.38 37.196 0 67.348 30.152 67.348 67.351s-30.153 67.349-67.349 67.349c-36.202 0-65.722-28.564-67.274-64.387l35.977 23.984c7.161 4.773 15.253 7.057 23.259 7.057zm274.71-418c46.937 0 85.33 38.406 85.33 85.344v341.31c0 46.968-38.393 85.342-85.33 85.342h-341.33c-46.938 0-85.344-38.375-85.344-85.341v-101.51l60.667 40.444c-5.826 31.587 3.469 65.415 27.899 89.845 39.452 39.452 103.42 39.452 142.87 0 24.234-24.231 33.575-57.715 28.039-89.082l124.53-111.49v-1e-3c23.123-3.319 45.408-13.872 63.197-31.661 43.736-43.738 43.736-114.65 0-158.39-43.74-43.739-114.65-43.739-158.39 0-17.789 17.789-28.344 40.073-31.662 63.196l-102.35 155.12c-15.924 0.816-31.689 5.382-45.863 13.695l-108.93-72.621v-138.84c0-46.938 38.405-85.344 85.343-85.344h341.33zm21.33 144c0-44.183-35.816-80-80-80s-80 35.817-80 80 35.816 80 80 80 80-35.817 80-80zm-128 0c0-26.51 21.49-48 48-48s48 21.49 48 48-21.49 48-48 48-48-21.49-48-48z"/></svg>');
+    background-color: white;
+    background-size: cover;
     border: 1px solid;
-    border-radius: 3px;
+    border-radius: 4px;
+  }
+  
+  div#mab1011warnbox
+  {
+    border: 1px solid;
+    padding: 10px;
+    margin: 8px;
+    background: rgba(205, 133, 63, 0.07);
+    margin-top: 16px;
+    border-radius: 7px;
+    box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.3);
   }
  </style>
 </head>
@@ -273,10 +401,16 @@
      <li lang=de>Deutsch</li>
      <li lang=ja>日本語</li>
      <li lang=ru>Русский</li>
-     <li lang=pl>Polski (95%)</li>
-     <li lang=it>Italiano (87%)</li>
+     <li lang=it>Italiano</li>
+     <li lang=pl>Polski</li>
+     <li lang=tr>Türkçe</li>
+     <li lang=pt-BR>Brasileiro</li>
+     <li lang=zh-Hans>简体中文</li>
+     <li lang=zh-Hant>繁體中文</li>
+     <li lang=sk>Slovenčina</li>
+     <li lang=ko>한국어</li>
      <li>
-      <a href=https://transifex.com/projects/p/swconquest/ target=tab>Want to contribute?</a>
+      <a href=https://transifex.com/projects/p/swconquest/ target=tab title='Contribute your time and help us localizing.'>Want to contribute?</a>
      </li>
   </ul>
  </section -->
@@ -294,9 +428,9 @@
   </label>
 
   <if-wb><not-mac>
-   <p><a target=_blank href=https://steamcommunity.com/sharedfiles/filedetails/?id=742671195#profileBlock>Subscribe to the Steam Workshop version</a> to get automatic updates.</p>
+   <p><a target=_blank href='https://steamcommunity.com/sharedfiles/filedetails/?id=742671195#profileBlock'>Subscribe to the Steam Workshop version</a> to get automatic updates.</p>
    <p><i>(Remember to wait until the big download has completed before playing the mod!)</i></p>
-   <p style="text-align: center; border-bottom: 1px solid; height: 14px; margin-bottom: 36px;"><legend style="display: inline-block; background: rgba(34, 26, 24, 0.85) none repeat scroll 0% 0%; padding-left: 20px; padding-right: 20px; border-radius: 7px; border: 1px solid;">Or just download it manually...</legend></p>
+   <p style="text-align: center; border-bottom: 1px solid; height: 14px; margin-bottom: 36px;"><legend style="display: inline-table; margin: 0 auto; background: rgba(34, 26, 24, 0.85) none repeat scroll 0% 0%; padding-left: 20px; padding-right: 20px; border-radius: 7px; border: 1px solid;">Or just download it manually...</legend></p>
   </not-mac></if-wb>
   <ol>
     <li>Latest standalone version of the mod — <em>swc-094.7z</em>
@@ -338,7 +472,7 @@
     <b><em>To install:</em></b>
     <not-mac>
     Extract them sequentially, dragging and dropping a <em><abbr title='Star Wars Conquest'>SWC</abbr></em> directory inside of the
-    
+
     <!-- if you think that those *blank comments* are a bit fishy and unsightly, welcome to utopia land!
          they are there to hide carriage returns to the markup parser, otherwise adds extra spaces between words -->
     <if-mb>
@@ -346,6 +480,7 @@
        <em>Modules</em> folder of the game<!--
    --></abbr><!--
   --></if-mb><!--
+
   --><if-wb>
       <abbr title='By default the game is installed either in &#10;  «C:\Program Files (x86)\Steam\SteamApps\common\mountblade warband\modules\»&#10; for the Steam version or &#10;  «C:\Program Files (x86)\Mount&amp;Blade Warband\modules\»&#10; for the standalone version. &#10;&#10; Linux users who use Steam should install it in &#10;  «~/.steam/steam/steamapps/common/MountBlade Warband/Modules»'>
        <em>Modules</em> folder of the game<!--
@@ -359,9 +494,20 @@
     </not-mac>
     <!-- here's our mac notice, for those stylish special snowflakes -->
     <mac><!--
-   -->Mac OS X users have the buggiest version of the game, a few workarounds are needed to play our mod, <a href="http://steamcommunity.com/workshop/filedetails/discussion/742671195/343787283760438002/#forum_op_343787283760438002">follow our Mac installation guide.</a>
+   -->Mac OS X users have the buggiest version of the game, a few workarounds are needed to play our mod, <a href="http://steamcommunity.com/workshop/filedetails/discussion/742671195/343787283760438002/#forum_op_343787283760438002">follow our Mac installation guide</a>.
     </mac>
   </p>
+  
+  <if-mb>
+   <div id=mab1011warnbox>
+    <b><em>Note:</em></b>
+    Because of the stringent memory requirements, the only supported variant of the original game is <a href='https://www.mbrepository.com/file.php?id=2595' title='Download this version of the game.'>the latest, DRM-free «enhanced version»</a>, with <em>Mount&amp;Blade.exe</em> patched <a href='https://www.techpowerup.com/forums/threads/large-address-aware.112556/' title='Download the suggested LAA patcher program, or do it on your own.'>as large-address aware</a>.
+    <br/><br/>
+    The Steam version will not work out of the box. Alternatively, you can download a pre-patched executable <a href='https://raw.githubusercontent.com/tldmod/tldmod-downloads/master/mount%26blade.exe'>from <i>here</i></a> and replace the one in the Steam folder. It is the same shareware version, with one (<abbr title='large-address aware field'>LAA</abbr>) bit toggled. No other changes.
+    <br/><br/>
+    Without doing this the game will either crash at startup complaining about texture files or it will crash after surpassing ~1460 MB of RAM.
+   </div>
+  </if-mb>
 
   <nav>
     <p id=links role=navigation>
@@ -375,7 +521,7 @@
  </section>
 
  <!-- testing the addition of a small ad, just for kicks -->
- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+ <script defer src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
  <ins class="adsbygoogle"
       style="display:block"
       data-ad-client="ca-pub-2054328004027360"
@@ -396,18 +542,23 @@
    --swyter *bows*
  </noscript>
  <script>
+
   /* set either the `.if_wb` or the `.if_mb` class to the root element,
      so that the css picks it up and conditionally hides whatever it needs to */
-  window.onchange=function(e)
+  window.onchange = function(e)
   {
     localStorage["selected_instruction"] = e.target.id;
-    document.documentElement.classList.add(   e.target.id=="wb" ? "if-wb" : "if-mb");
-    document.documentElement.classList.remove(e.target.id=="wb" ? "if-mb" : "if-wb");
+
+    document.documentElement.classList.add   (e.target.id == "wb" ? "if-wb" : "if-mb");
+    document.documentElement.classList.remove(e.target.id == "wb" ? "if-mb" : "if-wb");
   }
+
   /* hacky workaround to get it working at loading time, hell yeah! */
   var cur = localStorage["selected_instruction"] || "wb";
+
   document.getElementById(cur).click();
   window.onchange({ target: {id: cur} });
+
   /* we'll show a different description if we are on a mac and want warband */
   if (navigator.platform.toLowerCase().indexOf("mac") !== -1)
   {
@@ -418,46 +569,70 @@
   function shitty_jsonp(url, callback)
   {
     random_id = "CB" + (+new Date());
+
     this.window[random_id] = function(json)
     {
       if(typeof callback === "function")
-      {
         callback.apply(this, arguments);
-      }
       else
-      {
         throw "you suck! a callback function soup is needed to run this!";
-      }
+
+
       /* remove the temp script thingie */
       document.head.removeChild(jsonp);
+
       /* remove itself */
       delete window[random_id];
     };
+
     jsonp=document.createElement("script");
-    jsonp.setAttribute("src","//whateverorigin.herokuapp.com/get?url="+url+"&callback="+random_id);
+    jsonp.setAttribute("src","https://api.allorigins.win/get?url="+url+"&callback="+random_id);
+
     document.head.appendChild(jsonp);
   }
+  
+  /* swy: guess what? older browsers like android 4.4.2 don't support for (var i of x) constructs */
+  function for_of_shim(iterate, callback)
+  {
+    for (var elem in iterate)
+    {
+      if (!iterate.hasOwnProperty(elem))
+        continue;
+            
+      callback(iterate[elem]);
+    }
+  }
+
   /* here's the real meal V */
   xhr = new XMLHttpRequest();
   xhr.responseType = 'json';
   xhr.open('GET', 'https://api.bitbucket.org/2.0/repositories/Swyter/swconquest-downloads/downloads');
   xhr.addEventListener('loadend', function(e)
   {
-    console.log("Starting to scrape the TLD downloads page & table!\n");
-   
-    if ((e.target.statusText != 'OK' && e.target.status != 200) || !e.target.response || !e.target.response.values)
+    console.log("Starting to scrape the SWC downloads page & table!\n");
+    console.log(e.target, e.target.status, e.target.response);
+    
+    if (e.target.responseType != 'json') /* swy: incompatible browsers reset this back to '' */
     {
-       console.error("[!] There was a network/API problem\n", e); return;
+      console.log("[w] manually parsing JSON response as fallback:", e.target);
+      var iterate = JSON.parse(e.target.responseText).values;
     }
+    else if ((e.target.statusText != 'OK' && e.target.status != 200) || !e.target.response || !e.target.response.values)
+    {
+      console.error("[!] There was a network/API problem\n", e); return;
+    }
+    else
+      var iterate = e.target.response.values
     
     /* default paleolithic date to compare against */
     window.mb_date = new Date("1992-01-01");
     window.wb_date = new Date("1992-01-01");
   
-    for (var entry of e.target.response.values)
+    for_of_shim (iterate, function(entry)
     {
       var cur_date = new Date(entry.created_on);
       var cur_href = entry.links.self.href;
+
       /* mab1011 link? */
       if (cur_href.indexOf("swconquest-094-final_nightly_") != -1 && +cur_date > +window.mb_date)
       {
@@ -470,33 +645,83 @@
         window.wb_date = cur_date;
         window.wb_href = cur_href;
       }
-       
-    }
+    })
     
     console.log("Finished!\n--");
+
     if (window.wb_href && window.mb_href)
     {
-      console.log("latest Warband nightly URL: "+ wb_href +", uploaded on "+ wb_date);
-      console.log("latest MB 1011 nightly URL: "+ mb_href +", uploaded on "+ mb_date);
+      console.log('latest Warband nightly URL: ' + wb_href + ', uploaded on ' + wb_date);
+      console.log('latest MB 1011 nightly URL: ' + mb_href + ', uploaded on ' + mb_date);
+
       /* probably a fine example of why js sucks,
          try to format dates in a compact way w/o ending churning out spaguetti code */
-      document.getElementById("nightly_date_mab1011").textContent =             mb_date.getFullYear()            + "/" +
-                                                                   ( "0" + (1 + mb_date.getMonth()) ).substr(-2) + "/" +
-                                                                   ( "0" +      mb_date.getDate()   ).substr(-2);
-      document.getElementById("nightly_date_warband").textContent =             wb_date.getFullYear()            + "/" +
-                                                                   ( "0" + (1 + wb_date.getMonth()) ).substr(-2) + "/" +
-                                                                   ( "0" +      wb_date.getDate()   ).substr(-2);
+
+      document.getElementById("nightly_date_mab1011").textContent =             mb_date.getFullYear()            + '/' +
+                                                                   ( '0' + (1 + mb_date.getMonth()) ).substr(-2) + '/' +
+                                                                   ( '0' +      mb_date.getDate()   ).substr(-2);
+
+      document.getElementById("nightly_date_warband").textContent =             wb_date.getFullYear()            + '/' +
+                                                                   ( '0' + (1 + wb_date.getMonth()) ).substr(-2) + '/' +
+                                                                   ( '0' +      wb_date.getDate()   ).substr(-2);
+
       /* replace the static links with the latest scrapped ones */
       document.getElementById("nightly_link_mab1011").href = mb_href.trim();
       document.getElementById("nightly_link_warband").href = wb_href.trim();
     }
+
     else
     {
       console.error("[!] the bb downloads page couldn't be scrapped! :(");
     }
+
   });
   
   xhr.send();
+
+ /* new! update the translation percentages live with some trickery! */
+ shitty_jsonp("https://www.transifex.com/_/charts/js/swyter/swconquest/json/", function(json)
+ {
+    lang_lut =
+    {
+                  'English': 'en',
+                  'Spanish': 'es',
+                  'Russian': 'ru',
+                 'Japanese': 'ja',
+                   'German': 'de',
+                   'French': 'fr',
+                  'Italian': 'it',
+                   'Polish': 'pl',
+                  'Turkish': 'tr',
+                  'Chinese': 'zh',
+                    'Czech': 'cz',
+                   'Korean': 'ko',
+                   'Slovak': 'sk',
+      'Portuguese (Brazil)': 'pt-BR',
+       'Chinese Simplified': 'zh-Hans',
+      'Chinese Traditional': 'zh-Hant'
+    }
+
+    window.lang_perc = {};
+
+    /* swy: pretty, huh? i know! :( fight hacks with hacks! >:) */
+    for_of_shim (json.contents.match(/v:'[^']+'},{v:\d+/g), function(i)
+    {
+      var tmp = i.substr(3).split("'},{v:"); lang_perc[lang_lut[tmp[0]]] = parseInt(tmp[1])
+        console.log(tmp[0], lang_lut[tmp[0]]);
+    })
+
+    console.log('[!!] the Transifex language completion stats have been retrieved and parsed:', lang_perc)
+
+    for_of_shim (document.querySelectorAll("#lang > li[lang]"), function(elem)
+    {
+      console.log(elem, elem.lang, lang_perc[elem.lang], elem.textContent, !!(elem.textContent.indexOf('%') !== -1))
+
+      /* swy: now they don't have a percentage by default; unless they need them */
+      if (lang_perc[elem.lang] < 100)
+        elem.innerHTML += '<span> (' + lang_perc[elem.lang] + '%)</span>';
+    })
+  });
  </script>
 </body>
 </html>
